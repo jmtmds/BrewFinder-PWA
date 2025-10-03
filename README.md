@@ -7,9 +7,9 @@
 ### Prévia do Projeto
 
 <p align="center">
-  <img src="BrewFinder/assets/Recomendadas.png" alt="Tela de cervejarias recomendadas" width="auto" height="400px" style="display: inline-block; margin: 0 10px;">
-  <img src="BrewFinder/assets/Mapa.png" alt="Mapa com cervejarias" width="auto" height="400px" style="display: inline-block; margin: 0 10px;">
-  <img src="BrewFinder/assets/Visitadas.png" alt="Tela de cervejarias visitadas com foto" width="auto" height="400px" style="display: inline-block; margin: 0 10px;">
+  <img src="BrewFinder/assets/Recomendadas.png" alt="Tela de cervejarias recomendadas" width="auto" height="300px" style="display: inline-block; margin: 0 10px;">
+  <img src="BrewFinder/assets/Mapa.png" alt="Mapa com cervejarias" width="auto" height="300px" style="display: inline-block; margin: 0 10px;">
+  <img src="BrewFinder/assets/Visitadas.png" alt="Tela de cervejarias visitadas com foto" width="auto" height="300px" style="display: inline-block; margin: 0 10px;">
 </p>
 
 **[Clique aqui para acessar o App e encontrar sua próxima cervejaria!](https://brewfinderpwa.netlify.app/)**
