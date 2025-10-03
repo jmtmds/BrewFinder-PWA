@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFC107" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <title>BrewFinder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="app-header">
+        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+                d="M4 2h16v2H4V2zm1 3h14v12c0 2.21-1.79 4-4 4h-6c-2.21 0-4-1.79-4-4V5zm2 1v11c0 1.65 1.35 3 3 3h4c1.65 0 3-1.35 3-3V6H7z">
+            </path>
+        </svg>
+        <h1>BrewFinder</h1>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2>Encontre Cervejarias</h2>
+            <p>Utilize o Google Maps para obter resultados precisos e localizar cervejarias próximas a você.</p>
+            <form id="searchForm" class="search-form" novalidate>
+                <input type="text" id="cityInput" placeholder="Digite uma cidade" aria-label="Cidade">
+                <button type="submit" class="search-button">Buscar no Mapa</button>
+            </form>
+            <p class="divider">ou</p>
+            <button id="findBtn" class="find-button">
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
+                </svg>
+                <span>Usar minha localização</span>
+            </button>
+        </div>
+        <div id="mapsStatus" class="status-message" role="status" aria-live="polite"></div>
+        <div id="mapContainer" class="map-container hidden"></div>
+
+        <div class="card">
+            <h2>Cervejarias pelo mundo</h2>
+            <p>Descubra as cervejarias mais recomendadas ao redor do mundo.</p>
+            <button id="apiBtn" class="api-button">
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                </svg>
+                <span>Explorar Cervejarias ao Redor do Mundo</span>
+            </button>
+        </div>
+        <div id="apiStatus" class="status-message" role="status" aria-live="polite"></div>
+        <div id="breweryList" class="brewery-list"></div>
+
+        <div class="card">
+            <h2>Cervejarias Visitadas</h2>
+            <p>Adicione um registo das cervejarias que você já visitou.</p>
+            <form id="visitedForm" class="visited-form">
+                <input type="text" id="breweryName" placeholder="Nome da Cervejaria" required>
+                <textarea id="breweryNotes" placeholder="Anotações sobre o local..." rows="3"></textarea>
+                <div class="photo-controls">
+                    <label for="breweryPhoto" class="photo-label">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-1.01-1-3.08-2.99-2.09 2.08-4.99-5-5.92 5.99L2 14.99V4zm-4.87 8.13l-2.09-2.08-4.99 5-2.09-2.09L4 16h16l-4.87-3.87z" />
+                        </svg>
+                        <span>Adicionar Ficheiro</span>
+                    </label>
+                    <input type="file" id="breweryPhoto" accept="image/*">
+                    <button type="button" id="openCameraBtn" class="photo-label">
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h4.05l1.83-2h4.24l1.83 2H20v12zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z" />
+                        </svg>
+                        <span>Abrir Câmera</span>
+                    </button>
+                </div>
+                <img id="photoPreview" class="photo-preview" alt="Pré-visualização da foto">
+                <button type="submit" class="submit-button">Salvar Visita</button>
+            </form>
+        </div>
+        <div id="visitedStatus" class="status-message" role="status" aria-live="polite"></div>
+        <div id="visitedList" class="brewery-list"></div>
+    </main>
+
+    <div id="cameraModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <video id="cameraFeed" autoplay playsinline></video>
+            <canvas id="photoCanvas" class="hidden"></canvas>
+            <div id="captureControls" class="modal-controls">
+                <button id="captureBtn">Capturar Foto</button>
+                <button id="cancelCaptureBtn">Cancelar</button>
+            </div>
+            <div id="previewControls" class="modal-controls hidden">
+                <button id="retakeBtn">Tirar Outra</button>
+                <button id="confirmBtn">Confirmar Foto</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
